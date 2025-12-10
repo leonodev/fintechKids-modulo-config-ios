@@ -15,13 +15,10 @@ struct ContentView: View {
         NavigationView {
             VStack(spacing: 20) {
                 
-                // --- Sección de Status ---
-                Text("Estado de la Carga")
-                    .font(.headline)
-                
                 // --- Sección de Lenguajes ---
                 Text("Lenguajes Habilitados (Remote Config)")
                     .font(.title3)
+                    .padding()
                 
                 List {
                     if viewModel.languages.isEmpty {
@@ -32,7 +29,7 @@ struct ContentView: View {
                         }
                     }
                 }
-                .frame(maxHeight: 200)
+                .frame(maxHeight: 300)
                 .listStyle(.insetGrouped)
             }
             .padding()

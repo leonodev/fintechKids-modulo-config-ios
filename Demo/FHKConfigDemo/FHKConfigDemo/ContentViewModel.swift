@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import FHKConfig
+import FHKUtils
 import Combine
 
 public final class ContentViewModel<T: RemoteConfigManagerProtocol>: ObservableObject {
@@ -29,9 +30,9 @@ public final class ContentViewModel<T: RemoteConfigManagerProtocol>: ObservableO
         configManager.fetchConfig { [weak self] error in
             guard let _ = self else { return }
             if let error = error {
-                print("⚠️ Error al obtener configuración remota: \(error.localizedDescription)")
+                Logger.error("Error al obtener configuración remota: \(error.localizedDescription)")
             } else {
-                print("✅ Remote Language Active")
+                Logger.info("Remote Language Active")
             }
         }
     }

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import FirebaseRemoteConfig
 import FirebaseCore
+import FHKUtils
 public import Combine
 
 
@@ -29,7 +30,7 @@ public final class RemoteConfigManager: RemoteConfigManagerProtocol {
     public init() {
         if FirebaseApp.app() == nil {
             FirebaseApp.configure()
-            print("✅ FirebaseApp configurado desde FHKConfig.")
+            Logger.info("FirebaseApp configurado desde FHKConfig.")
         }
         
         remoteConfig = RemoteConfig.remoteConfig()
@@ -38,6 +39,15 @@ public final class RemoteConfigManager: RemoteConfigManagerProtocol {
     
     private func setupSettings() {
         let settings = RemoteConfigSettings()
+        
+        #if DEBUG
+        // fetch immediately in develop
+        settings.minimumFetchInterval = 0
+        #else
+        // fetch each two hours in production
+        settings.minimumFetchInterval = 7200
+        #endif
+        
         remoteConfig.configSettings = settings
     }
     
@@ -46,9 +56,7 @@ public final class RemoteConfigManager: RemoteConfigManagerProtocol {
             guard let self = self else { return }
             
             if let error = error {
-                print("⚠️ Error al obtener configuración remota: \(error.localizedDescription)")
-            } else {
-                print("✅ Remote Config activado. Status: \(status.rawValue)")
+                Logger.error("Error al obtener configuración remota: \(error.localizedDescription)")
             }
             
             self.enabledLanguages = self.getEnabledLanguages()
@@ -62,7 +70,7 @@ public final class RemoteConfigManager: RemoteConfigManagerProtocol {
         let possibleData: Data? = configValue.dataValue
         
         guard let jsonData = possibleData, !jsonData.isEmpty else {
-            print("❌ Error: No se pudo obtener el Data de lenguajes (el valor es nulo o vacío).")
+            Logger.error("Error: No se pudo obtener el Data de lenguajes (el valor es nulo o vacío).")
             return []
         }
         
@@ -70,7 +78,7 @@ public final class RemoteConfigManager: RemoteConfigManagerProtocol {
             let languageStatus = try JSONDecoder().decode(LanguageModel.self, from: jsonData)
             return languageStatus.enabledCodes
         } catch {
-            print("❌ Error al decodificar LanguageStatus: \(error.localizedDescription)")
+            Logger.error("Error al decodificar LanguageStatus: \(error.localizedDescription)")
             return []
         }
     }

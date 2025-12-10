@@ -17,7 +17,10 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git",
-            .upToNextMajor(from: "12.6.0"))
+            .upToNextMajor(from: "12.6.0")),
+        
+        .package(url: "https://github.com/leonodev/fintechKids-modulo-utils-ios.git",
+            .upToNextMajor(from: "1.0.2")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -33,6 +36,9 @@ let package = Package(
                 .product(name: "FirebaseStorage", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseMessaging", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseRemoteConfig", package: "firebase-ios-sdk"),
+                
+                // Modules Utils
+                .product(name: "FHKUtils", package: "fintechKids-modulo-utils-ios"),
             ]
         ),
         .testTarget(
