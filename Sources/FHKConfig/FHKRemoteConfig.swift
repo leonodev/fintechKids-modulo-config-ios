@@ -9,62 +9,24 @@ import Foundation
 import SwiftUI
 import FirebaseRemoteConfig
 import FirebaseCore
-internal import Combine
+public import Combine
 
-struct LanguageStatus: Codable, Sendable {
-    let ES: Bool
-    let FR: Bool
-    let EN: Bool
-    let IT: Bool
-    
-    var enabledCodes: [String] {
-        var codes: [String] = []
-        if ES { codes.append("ES") }
-        if FR { codes.append("FR") }
-        if EN { codes.append("EN") }
-        if IT { codes.append("IT") }
-        return codes
-    }
+
+public protocol RemoteConfigManagerProtocol: ObservableObject {
+    var enabledLanguages: [String] { get }
+    func fetchConfig(completion: @escaping (Error?) -> Void)
 }
 
-public final class RemoteConfigManager: Sendable {
-    
-    // MARK: - Singleton & Lock
+
+@MainActor
+public final class RemoteConfigManager: RemoteConfigManagerProtocol {
     public static let shared = RemoteConfigManager()
+    public let remoteConfig: RemoteConfig
+    @Published public var enabledLanguages: [String] = []
     
-    // Lock para proteger el acceso a _enabledLanguages y el RemoteConfig
-    private let lock = NSLock()
-    
-    public let remoteConfig: RemoteConfig!
-    public var _enabledLanguages: [String] = []
-    
-    // Stream para emitir cambios de forma segura (alternativa a @Published en Sendable)
-    public let _languageStream: AsyncStream<[String]>
-    public let _languageContinuation: AsyncStream<[String]>.Continuation
-    
-    public var enabledLanguages: [String] {
-        lock.lock()
-        defer { lock.unlock() }
-        return _enabledLanguages
-    }
-    
-    public static var currentEnabledLanguages: [String] {
-        return RemoteConfigManager.shared.enabledLanguages
-    }
-    
-    public static var currentLanguageUpdates: AsyncStream<[String]> {
-        return RemoteConfigManager.shared.languageUpdates
-    }
-    
-    // Stream público para que SwiftUI pueda reaccionar a los cambios
-    private var languageUpdates: AsyncStream<[String]> {
-        _languageStream
-    }
     
     // MARK: - Inicialización
     public init() {
-        (_languageStream, _languageContinuation) = AsyncStream.makeStream()
-        
         if FirebaseApp.app() == nil {
             FirebaseApp.configure()
             print("✅ FirebaseApp configurado desde FHKConfig.")
@@ -72,27 +34,14 @@ public final class RemoteConfigManager: Sendable {
         
         remoteConfig = RemoteConfig.remoteConfig()
         setupSettings()
-        updateLanguages(self.getEnabledLanguages())
     }
     
     private func setupSettings() {
         let settings = RemoteConfigSettings()
-        #if DEBUG
-        settings.minimumFetchInterval = 0
-        #endif
         remoteConfig.configSettings = settings
     }
     
-    private func updateLanguages(_ newLanguages: [String]) {
-        lock.lock()
-        _enabledLanguages = newLanguages
-        lock.unlock()
-        
-        _languageContinuation.yield(newLanguages)
-    }
-    
-    private func fetchConfig(completion: @escaping (Error?) -> Void) {
-        lock.lock()
+    public func fetchConfig(completion: @escaping (Error?) -> Void) {
         remoteConfig.fetchAndActivate { [weak self] (status, error) in
             guard let self = self else { return }
             
@@ -102,15 +51,9 @@ public final class RemoteConfigManager: Sendable {
                 print("✅ Remote Config activado. Status: \(status.rawValue)")
             }
             
-            self.updateLanguages(self.getEnabledLanguages())
-            
+            self.enabledLanguages = self.getEnabledLanguages()
             completion(error)
-            self.lock.unlock()
         }
-    }
-    
-    public static func fetchConfig(completion: @escaping (Error?) -> Void) {
-        RemoteConfigManager.shared.fetchConfig(completion: completion)
     }
     
     // MARK: - Obtener Lenguajes
@@ -124,7 +67,7 @@ public final class RemoteConfigManager: Sendable {
         }
         
         do {
-            let languageStatus = try JSONDecoder().decode(LanguageStatus.self, from: jsonData)
+            let languageStatus = try JSONDecoder().decode(LanguageModel.self, from: jsonData)
             return languageStatus.enabledCodes
         } catch {
             print("❌ Error al decodificar LanguageStatus: \(error.localizedDescription)")
