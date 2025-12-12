@@ -17,6 +17,6 @@ public struct Configuration {
         case fr = "FR"
     }
     
-    public var environmentType: EnvironmentType = .production
-    public var languageType: LanguageType = .es
+    public static var environmentType: EnvironmentType = .production
+    public static var languageType: LanguageType = .es
 }
