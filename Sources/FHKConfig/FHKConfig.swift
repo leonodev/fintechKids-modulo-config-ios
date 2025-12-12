@@ -20,24 +20,28 @@ public struct Configuration {
         case es = "ES"
         case it = "IT"
         case fr = "FR"
+        
+        func code() -> String {
+            return self.rawValue
+        }
     }
 
     private static var environmentType: EnvironmentType = .production
     private static var languageType: LanguageType = .es
 
-    public static func setEnvironmentType(_ environmentType: EnvironmentType) {
+    public static func setEnvironment(_ environmentType: EnvironmentType) {
         Self.environmentType = environmentType
     }
 
-    public static func setLanguageType(_ languageType: LanguageType) {
+    public static func setLanguage(_ languageType: LanguageType) {
         Self.languageType = languageType
     }
 
-    public static func getEnvironmentType() -> EnvironmentType {
+    public static func getEnvironment() -> EnvironmentType {
         return Self.environmentType
     }
 
-    public static func getLanguageType() -> LanguageType {
+    public static func getLanguage() -> LanguageType {
         return Self.languageType
     }
 }
