@@ -21,7 +21,7 @@ public struct Configuration {
         case it = "IT"
         case fr = "FR"
         
-        func code() -> String {
+        public func code() -> String {
             return self.rawValue
         }
     }
