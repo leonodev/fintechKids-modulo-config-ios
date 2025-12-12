@@ -12,7 +12,7 @@ public struct Configuration {
         case develop = "Develop"
     }
 
-    public enum LanguageType: String, Sendable {
+    public enum LanguageType: String, Sendable, Codable {
         case en = "EN"
         case es = "ES"
         case it = "IT"
