@@ -6,8 +6,8 @@ import Foundation
 public struct Configuration {
     
     public enum EnvironmentType: String {
-        case production = "production"
-        case development = "development"
+        case production = "Production"
+        case develop = "Develop"
     }
 
     public enum LanguageType: String {
