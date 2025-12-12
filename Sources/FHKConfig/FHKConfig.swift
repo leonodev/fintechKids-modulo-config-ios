@@ -22,6 +22,10 @@ public struct Configuration {
             return self.rawValue
         }
     }
+    
+    public static func from(string: String) -> LanguageType {
+        return LanguageType(rawValue: string.uppercased()) ?? .es
+    }
 
     public static func setEnvironment(_ environmentType: EnvironmentType) {
         Self.environmentType = environmentType
