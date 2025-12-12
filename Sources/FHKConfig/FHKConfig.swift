@@ -2,6 +2,8 @@
 // https://docs.swift.org/swift-book
 
 import Foundation
+import FHKDesignSystem
+import SwiftUI
 
 public struct Configuration {
     private static var environmentType: EnvironmentType = .production
@@ -20,6 +22,19 @@ public struct Configuration {
         
         public func code() -> String {
             return self.rawValue
+        }
+        
+        public var flagImage: Image {
+            switch self {
+            case .es: return .spainCircleFlag
+            case .it: return .italyCircleFlag
+            case .en: return .englandCircleFlag
+            case .fr: return .franceCircleFlag
+            }
+        }
+        
+        public static func getCode(from type: LanguageType) -> String {
+            return type.code()
         }
     }
     
@@ -40,6 +55,7 @@ public struct Configuration {
     }
 
     public static func getLanguage() -> LanguageType {
+//        AppSecurity.shared
         return Self.languageType
     }
 }

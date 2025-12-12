@@ -1,5 +1,4 @@
 {
-  "originHash" : "5e2ada911f2e9735a53121a5b5093e7ab4dbcbaf44a6d99841f3841c87ca58ca",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -17,15 +16,6 @@
       "state" : {
         "revision" : "61b85103a1aeed8218f17c794687781505fbbef5",
         "version" : "11.2.0"
-      }
-    },
-    {
-      "identity" : "fintechkids-modulo-designsystem-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/leonodev/fintechKids-modulo-designsystem-ios.git",
-      "state" : {
-        "revision" : "4396fc3904b008771d0748ab60cce4c948e1db16",
-        "version" : "1.0.4"
       }
     },
     {
@@ -146,5 +136,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
