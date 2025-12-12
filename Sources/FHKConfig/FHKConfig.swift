@@ -3,13 +3,10 @@
 
 import Foundation
 
-@globalActor
-public actor ConfigurationActor {
-    public static let shared = ConfigurationActor()
-}
-
-@ConfigurationActor
 public struct Configuration {
+    private static var environmentType: EnvironmentType = .production
+    private static var languageType: LanguageType = .es
+    
     public enum EnvironmentType: String, Sendable {
         case production = "Production"
         case develop = "Develop"
@@ -25,9 +22,6 @@ public struct Configuration {
             return self.rawValue
         }
     }
-
-    private static var environmentType: EnvironmentType = .production
-    private static var languageType: LanguageType = .es
 
     public static func setEnvironment(_ environmentType: EnvironmentType) {
         Self.environmentType = environmentType
