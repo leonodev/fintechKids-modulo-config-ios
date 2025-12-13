@@ -24,7 +24,7 @@ public struct Configuration {
             return self.rawValue
         }
         
-        public var languageToImage: Image {
+        public var codeToImageFlag: Image {
             switch self {
             case .es: return .spainCircleFlag
             case .it: return .italyCircleFlag
@@ -32,35 +32,14 @@ public struct Configuration {
             case .fr: return .franceCircleFlag
             }
         }
-        
-        public static func getCode(from type: LanguageType) -> String {
-            return type.code()
-        }
-        
-        public static func imageToCode(_ flag: Image) -> String? {
-            if flag == .spainCircleFlag { return "ES" }
-            if flag == .italyCircleFlag { return "IT" }
-            if flag == .englandCircleFlag { return "EN" }
-            if flag == .franceCircleFlag { return "FR" }
-            return nil
-        }
-        
-        public static func codeToImage(_ code: String) -> Image? {
-            switch code {
-            case "ES": return .spainCircleFlag
-            case "IT": return .italyCircleFlag
-            case "EN": return .englandCircleFlag
-            case "FR": return .franceCircleFlag
-            default: return nil
-            }
-        }
     }
     
-    public static func from(string: String) -> LanguageType {
+    public static func languageTypeFromCode(string: String) -> LanguageType {
         return LanguageType(rawValue: string.uppercased()) ?? .es
     }
 
     public static func setEnvironment(_ environmentType: EnvironmentType) {
+        
         Self.environmentType = environmentType
     }
 
@@ -74,5 +53,16 @@ public struct Configuration {
 
     public static func getLanguage() -> LanguageType {
         return Self.languageType
+    }
+}
+
+extension Image {
+    public var imageToCode: String {
+        switch self {
+        case .italyCircleFlag: return Configuration.LanguageType.it.code()
+        case .englandCircleFlag: return Configuration.LanguageType.en.code()
+        case .franceCircleFlag: return Configuration.LanguageType.fr.code()
+        default: return Configuration.LanguageType.es.code()
+        }
     }
 }
