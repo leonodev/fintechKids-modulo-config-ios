@@ -24,7 +24,7 @@ public struct Configuration {
             return self.rawValue
         }
         
-        public var codeToImageFlag: Image {
+        public var languageTypeToImageFlag: Image {
             switch self {
             case .es: return .spainCircleFlag
             case .it: return .italyCircleFlag
@@ -34,7 +34,7 @@ public struct Configuration {
         }
     }
     
-    public static func languageTypeFromCode(string: String) -> LanguageType {
+    public static func languageTypeFromCode(_ string: String) -> LanguageType {
         return LanguageType(rawValue: string.uppercased()) ?? .es
     }
 
