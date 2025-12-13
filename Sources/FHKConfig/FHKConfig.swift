@@ -24,7 +24,7 @@ public struct Configuration {
             return self.rawValue
         }
         
-        public var flagImage: Image {
+        public var languageToImage: Image {
             switch self {
             case .es: return .spainCircleFlag
             case .it: return .italyCircleFlag
@@ -35,6 +35,24 @@ public struct Configuration {
         
         public static func getCode(from type: LanguageType) -> String {
             return type.code()
+        }
+        
+        public static func imageToCode(_ flag: Image) -> String? {
+            if flag == .spainCircleFlag { return "ES" }
+            if flag == .italyCircleFlag { return "IT" }
+            if flag == .englandCircleFlag { return "EN" }
+            if flag == .franceCircleFlag { return "FR" }
+            return nil
+        }
+        
+        public static func codeToImage(_ code: String) -> Image? {
+            switch code {
+            case "ES": return .spainCircleFlag
+            case "IT": return .italyCircleFlag
+            case "EN": return .englandCircleFlag
+            case "FR": return .franceCircleFlag
+            default: return nil
+            }
         }
     }
     
@@ -55,7 +73,6 @@ public struct Configuration {
     }
 
     public static func getLanguage() -> LanguageType {
-//        AppSecurity.shared
         return Self.languageType
     }
 }
