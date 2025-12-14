@@ -9,14 +9,15 @@ import FHKConfig
 import FHKUtils
 import Combine
 
-public final class ContentViewModel<T: RemoteConfigManagerProtocol>: ObservableObject {
-    private var configManager: T
+public final class ContentViewModel<Manager: RemoteConfigManagerProtocol>: ObservableObject {
+    private var configManager: Manager
     
     @Published var languages: [String] = []
     private var cancellables = Set<AnyCancellable>()
     
-    public init(configManager: T) {
+    public init(configManager: Manager) {
         self.configManager = configManager
+        self.languages = configManager.enabledLanguages
         
         configManager.objectWillChange
             .receive(on: DispatchQueue.main)

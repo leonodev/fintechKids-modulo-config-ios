@@ -9,7 +9,7 @@ import SwiftUI
 import FHKConfig
 
 struct ContentView: View {
-    @StateObject private var viewModel = ContentViewModel(configManager: RemoteConfigManager.shared)
+    @StateObject private var viewModel = ContentViewModel(configManager: RemoteConfigManager())
     
     var body: some View {
         NavigationView {

@@ -13,15 +13,13 @@ import FHKUtils
 public import Combine
 
 
-public protocol RemoteConfigManagerProtocol: ObservableObject {
+public protocol RemoteConfigManagerProtocol: ObservableObject, AnyObject {
     var enabledLanguages: [String] { get }
     func fetchConfig(completion: @escaping (Error?) -> Void)
 }
 
-
 @MainActor
 public final class RemoteConfigManager: RemoteConfigManagerProtocol {
-    public static let shared = RemoteConfigManager()
     public let remoteConfig: RemoteConfig
     @Published public var enabledLanguages: [String] = []
     
@@ -83,3 +81,15 @@ public final class RemoteConfigManager: RemoteConfigManagerProtocol {
         }
     }
 }
+
+/*
+ USO EN TEST
+ 
+ final class MockConfigManager: RemoteConfigManagerProtocol {
+     @Published var enabledLanguages: [String] = ["fr", "de"]
+     // ... implementación de fetchConfig
+ }
+
+ let mockManager = MockConfigManager()
+ let viewModel = ContentViewModel(configManager: mockManager)
+ */
