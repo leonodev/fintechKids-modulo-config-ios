@@ -13,7 +13,7 @@ import FHKUtils
 public final class LanguageManager: ObservableObject {
     public static let shared = LanguageManager()
     private let storage: UserDefaultsProtocol = UserDefaultStorage()
-    @Published private(set) var selectedLanguage: String = "es"
+    @Published public var selectedLanguage: String = "es"
     
     private init() {}
     
