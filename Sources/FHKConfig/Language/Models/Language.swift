@@ -8,17 +8,17 @@
 import Foundation
 
 public struct LanguageModel: Codable {
-    let ES: Bool
-    let FR: Bool
-    let EN: Bool
-    let IT: Bool
+    let es: Bool
+    let fr: Bool
+    let en: Bool
+    let it: Bool
     
     var enabledCodes: [String] {
         var codes: [String] = []
-        if ES { codes.append(Configuration.LanguageType.es.code()) }
-        if FR { codes.append(Configuration.LanguageType.fr.code()) }
-        if EN { codes.append(Configuration.LanguageType.en.code()) }
-        if IT { codes.append(Configuration.LanguageType.it.code()) }
+        if es { codes.append(Configuration.LanguageType.es.code()) }
+        if fr { codes.append(Configuration.LanguageType.fr.code()) }
+        if en { codes.append(Configuration.LanguageType.en.code()) }
+        if it { codes.append(Configuration.LanguageType.it.code()) }
         return codes
     }
 }
