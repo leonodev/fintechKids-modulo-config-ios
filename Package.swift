@@ -23,7 +23,10 @@ let package = Package(
             .upToNextMajor(from: "1.0.2")),
         
         .package(url: "https://github.com/leonodev/fintechKids-modulo-designsystem-ios.git",
-            .upToNextMajor(from: "1.0.4"))
+            .upToNextMajor(from: "1.0.4")),
+        
+        .package(url: "https://github.com/leonodev/fintechKids-modulo-storage-ios.git", branch: "main")
+        
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -40,9 +43,10 @@ let package = Package(
                 .product(name: "FirebaseMessaging", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseRemoteConfig", package: "firebase-ios-sdk"),
                 
-                // Modules Utils
+                // Modules FHK
                 .product(name: "FHKUtils", package: "fintechKids-modulo-utils-ios"),
-                .product(name: "FHKDesignSystem", package: "fintechKids-modulo-designsystem-ios")
+                .product(name: "FHKDesignSystem", package: "fintechKids-modulo-designsystem-ios"),
+                .product(name: "FHKStorage", package: "fintechKids-modulo-storage-ios")
             ]
         ),
         .testTarget(
