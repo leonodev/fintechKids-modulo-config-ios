@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct LanguageObserverModifier: ViewModifier {
+public struct LanguageObserverModifier: ViewModifier {
     @State private var languageId = UUID()
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .id(languageId) // Fuerza el refresh
             .onReceive(NotificationCenter.default.publisher(for: .languageDidChange)) { _ in
@@ -20,7 +20,7 @@ struct LanguageObserverModifier: ViewModifier {
 }
 
 public extension View {
-    func observeLanguage() -> some View {
+    public func observeLanguage() -> some View {
         self.modifier(LanguageObserverModifier())
     }
 }
