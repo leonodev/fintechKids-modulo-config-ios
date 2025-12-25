@@ -15,10 +15,10 @@ public struct Configuration {
     }
 
     public enum LanguageType: String, Sendable, Codable {
-        case en = "EN"
-        case es = "ES"
-        case it = "IT"
-        case fr = "FR"
+        case en = "en"
+        case es = "es"
+        case it = "it"
+        case fr = "fr"
         
         public func code() -> String {
             return self.rawValue
@@ -35,11 +35,10 @@ public struct Configuration {
     }
     
     public static func languageTypeFromCode(_ string: String) -> LanguageType {
-        return LanguageType(rawValue: string.uppercased()) ?? .es
+        return LanguageType(rawValue: string) ?? .es
     }
 
     public static func setEnvironment(_ environmentType: EnvironmentType) {
-        
         Self.environmentType = environmentType
     }
 

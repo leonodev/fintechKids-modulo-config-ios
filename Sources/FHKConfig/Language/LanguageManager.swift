@@ -23,7 +23,6 @@ public final class LanguageManager: ObservableObject {
             let newCode = languageCode ?? "es"
             
             await MainActor.run {
-                // Sincronizamos y notificamos SIEMPRE
                 self.selectedLanguage = newCode.lowercased()
                 NotificationCenter.default.post(name: .languageDidChange, object: nil)
             }
