@@ -9,8 +9,14 @@ import SwiftUI
 import FHKStorage
 import FHKUtils
 
+public protocol LanguageManagerProtocol: ObservableObject {
+    var selectedLanguage: String { get }
+    func readLanguage() async
+    func saveLanguage(_ language: String) async
+}
+
 @MainActor
-public final class LanguageManager: ObservableObject {
+public final class LanguageManager: LanguageManagerProtocol {
     public static let shared = LanguageManager()
     private let storage: UserDefaultsProtocol = UserDefaultStorage()
     @Published public var selectedLanguage: String = "es"
@@ -18,29 +24,18 @@ public final class LanguageManager: ObservableObject {
     private init() {}
     
     public func readLanguage() async {
-        do {
-            let languageCode = try await storage.read(String.self, forKey: UserDefaultsKeys.languageKey)
-            let newCode = languageCode ?? "es"
-            
-            await MainActor.run {
-                self.selectedLanguage = newCode.lowercased()
-                NotificationCenter.default.post(name: .languageDidChange, object: nil)
-            }
-        } catch {
-            Logger.error("Error reading: \(error)")
-        }
+        let languageCode = try? await storage.read(String.self, forKey: UserDefaultsKeys.languageKey)
+        let newCode = languageCode ?? "es"
+        updateAndNotify(newCode)
     }
     
     public func saveLanguage(_ language: String) async {
-        do {
-            try await storage.save(language, forKey: UserDefaultsKeys.languageKey)
-            
-            await MainActor.run {
-                self.selectedLanguage = language.lowercased()
-                NotificationCenter.default.post(name: .languageDidChange, object: nil)
-            }
-        } catch {
-            Logger.error("Error saving language: \(error)")
-        }
+        try? await storage.save(language, forKey: UserDefaultsKeys.languageKey)
+        updateAndNotify(language)
+    }
+    
+    private func updateAndNotify(_ code: String) {
+        self.selectedLanguage = code.lowercased()
+        NotificationCenter.default.post(name: .languageDidChange, object: nil)
     }
 }
