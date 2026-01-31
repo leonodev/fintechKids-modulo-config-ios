@@ -65,19 +65,28 @@ public final class RemoteConfigManager: RemoteConfigManagerProtocol {
     // MARK: - Obtener Lenguajes
     private func getEnabledLanguages() -> [String] {
         let configValue = remoteConfig.configValue(forKey: "enabled_languages")
-        let possibleData: Data? = configValue.dataValue
         
-        guard let jsonData = possibleData, !jsonData.isEmpty else {
-            Logger.error("Error: No se pudo obtener el Data de lenguajes (el valor es nulo o vacío).")
-            return []
+        // Obtenemos el valor (Firebase devuelve "" si no existe, no nil)
+        let jsonString = configValue.stringValue
+        
+        // 2. Comprobamos que no esté vacío
+        guard !jsonString.isEmpty else {
+            Logger.error("Error: El valor de 'enabled_languages' en Firebase está vacío.")
+            return ["es"]
+        }
+        
+        // Convertimos a Data
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            Logger.error("Error: No se pudo convertir el string de Firebase a Data.")
+            return ["es"]
         }
         
         do {
             let languageStatus = try JSONDecoder().decode(LanguageModel.self, from: jsonData)
             return languageStatus.enabledCodes
         } catch {
-            Logger.error("Error al decodificar LanguageStatus: \(error.localizedDescription)")
-            return []
+            Logger.error("Error al decodificar JSON de Remote Config: \(error)")
+            return ["es"]
         }
     }
 }
