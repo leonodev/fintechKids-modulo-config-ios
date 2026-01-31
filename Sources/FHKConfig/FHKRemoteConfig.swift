@@ -49,16 +49,40 @@ public final class RemoteConfigManager: RemoteConfigManagerProtocol {
         remoteConfig.configSettings = settings
     }
     
+//    public func fetchConfig(completion: @escaping (Error?) -> Void) {
+//        remoteConfig.fetchAndActivate { [weak self] (status, error) in
+//            guard let self = self else { return }
+//            
+//            if let error = error {
+//                Logger.error("Error al obtener configuración remota: \(error.localizedDescription)")
+//            }
+//            
+//            self.enabledLanguages = self.getEnabledLanguages()
+//            completion(error)
+//        }
+//    }
+    
     public func fetchConfig(completion: @escaping (Error?) -> Void) {
         remoteConfig.fetchAndActivate { [weak self] (status, error) in
             guard let self = self else { return }
             
-            if let error = error {
-                Logger.error("Error al obtener configuración remota: \(error.localizedDescription)")
+            switch status {
+            case .successFetchedFromRemote:
+                Logger.info("✅ Firebase: Datos frescos descargados.")
+            case .successUsingPreFetchedData:
+                Logger.info("🏠 Firebase: Usando datos de la caché local.")
+            case .error:
+                Logger.error("❌ Firebase: Error en la red o Throttling.")
+            @unknown default:
+                break
             }
             
-            self.enabledLanguages = self.getEnabledLanguages()
-            completion(error)
+            // Actualizamos la propiedad SIEMPRE, ya que si falló el fetch,
+            // ahora tendrá al menos los defaults que pusimos arriba.
+            Task { @MainActor in
+                self.enabledLanguages = self.getEnabledLanguages()
+                completion(error)
+            }
         }
     }
     
