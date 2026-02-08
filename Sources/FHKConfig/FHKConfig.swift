@@ -15,6 +15,7 @@ public struct Configuration {
     }
 
     public enum LanguageType: String, Sendable, Codable, Equatable {
+        case none = "none"
         case en = "en"
         case es = "es"
         case it = "it"
@@ -26,6 +27,7 @@ public struct Configuration {
         
         public var languageTypeToImageFlag: Image {
             switch self {
+            case .none return .no
             case .es: return .spainCircleFlag
             case .it: return .italyCircleFlag
             case .en: return .englandCircleFlag
