@@ -68,8 +68,7 @@ extension Image {
         case .franceCircleFlag: return Configuration.LanguageType.fr.code()
         case .italyCircleFlag: return Configuration.LanguageType.it.code()
         case .spainCircleFlag: return Configuration.LanguageType.es.code()
-        
-        default: return Configuration.LanguageType.none.code()
+        case .noneFlag: return self
         }
     }
 }
