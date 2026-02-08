@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct Configuration {
     private static var environmentType: EnvironmentType = .production
-    private static var languageType: LanguageType = .es
+    private static var languageType: LanguageType = .none
     
     public enum EnvironmentType: String, Sendable {
         case production = "Production"
@@ -27,17 +27,21 @@ public struct Configuration {
         
         public var languageTypeToImageFlag: Image {
             switch self {
-            case .none return .no
+            case .none: return .noneFlag
             case .es: return .spainCircleFlag
             case .it: return .italyCircleFlag
             case .en: return .englandCircleFlag
             case .fr: return .franceCircleFlag
             }
         }
+        
+        public static func == (lhs: LanguageType, rhs: LanguageType) -> Bool {
+            lhs.code() == rhs.code()
+        }
     }
     
     public static func languageTypeFromCode(_ string: String) -> LanguageType {
-        return LanguageType(rawValue: string) ?? .es
+        return LanguageType(rawValue: string) ?? .none
     }
 
     public static func setEnvironment(_ environmentType: EnvironmentType) {
@@ -60,10 +64,12 @@ public struct Configuration {
 extension Image {
     public var imageToCode: String {
         switch self {
-        case .italyCircleFlag: return Configuration.LanguageType.it.code()
         case .englandCircleFlag: return Configuration.LanguageType.en.code()
         case .franceCircleFlag: return Configuration.LanguageType.fr.code()
-        default: return Configuration.LanguageType.es.code()
+        case .italyCircleFlag: return Configuration.LanguageType.it.code()
+        case .spainCircleFlag: return Configuration.LanguageType.es.code()
+        
+        default: return Configuration.LanguageType.none.code()
         }
     }
 }
