@@ -23,7 +23,7 @@ let package = Package(
             .upToNextMajor(from: "1.0.2")),
         
         .package(url: "https://github.com/leonodev/fintechKids-modulo-designsystem-ios.git",
-            .upToNextMajor(from: "1.0.4")),
+                 branch: "main"),
         
         .package(url: "https://github.com/leonodev/fintechKids-modulo-storage-ios.git",
                  branch: "main")
