@@ -47,6 +47,14 @@ public final class RemoteConfigManager: FHKConfigManagerProtocol {
         #endif
         
         remoteConfig.configSettings = settings
+        
+        // Definimos los valores por defecto
+        let defaultValues: [String: NSObject] = [
+            "enabled_languages": "{\"es\": true, \"fr\": true, \"en\": true, \"it\": true}" as NSObject
+        ]
+
+        // Los registramos en Remote Config
+        remoteConfig.setDefaults(defaultValues)
     }
     
     public func fetchConfig(completion: @escaping (Error?) -> Void) {
