@@ -11,9 +11,9 @@ import FHKInjections
 import FHKConfig
 
 public extension DependenciesInjection {
-    var configManager: any RemoteConfigManagerProtocol {
-        get { self[(any RemoteConfigManagerProtocol).self] }
-        set { self[(any RemoteConfigManagerProtocol).self] = newValue }
+    var configManager: any FHKConfigManagerProtocol {
+        get { self[(any FHKConfigManagerProtocol).self] }
+        set { self[(any FHKConfigManagerProtocol).self] = newValue }
     }
 }
 
@@ -25,7 +25,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let deps = DependenciesInjection.shared
       
     /// Configuration
-    deps.set(RemoteConfigManager(), for: (any RemoteConfigManagerProtocol).self)
+    deps.set(RemoteConfigManager(), for: (any FHKConfigManagerProtocol).self)
 
     return true
   }

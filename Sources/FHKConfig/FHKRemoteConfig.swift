@@ -13,13 +13,13 @@ import Observation
 import FHKUtils
 public import Combine
 
-public protocol RemoteConfigManagerProtocol: Sendable, AnyObject {
+public protocol FHKConfigManagerProtocol: Sendable, AnyObject {
     var enabledLanguages: [String] { get }
     func fetchConfig(completion: @escaping (Error?) -> Void)
 }
 
 @MainActor
-public final class RemoteConfigManager: RemoteConfigManagerProtocol {
+public final class RemoteConfigManager: FHKConfigManagerProtocol {
     public let remoteConfig: RemoteConfig
     public var enabledLanguages: [String] = []
     

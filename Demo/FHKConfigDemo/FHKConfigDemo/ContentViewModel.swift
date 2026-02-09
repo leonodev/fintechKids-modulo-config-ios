@@ -15,7 +15,7 @@ public final class ContentViewModel {
     var languages: [String] = []
     
     // Injections Dependency
-    var configManager: RemoteConfigManagerProtocol {
+    var configManager: FHKConfigManagerProtocol {
         inject.configManager
     }
     
