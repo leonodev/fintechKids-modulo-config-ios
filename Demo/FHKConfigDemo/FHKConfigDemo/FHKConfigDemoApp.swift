@@ -7,12 +7,25 @@
 
 import SwiftUI
 import FirebaseCore
+import FHKInjections
+import FHKConfig
 
+public extension DependenciesInjection {
+    var configManager: any RemoteConfigManagerProtocol {
+        get { self[(any RemoteConfigManagerProtocol).self] }
+        set { self[(any RemoteConfigManagerProtocol).self] = newValue }
+    }
+}
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     FirebaseApp.configure()
+      
+    let deps = DependenciesInjection.shared
+      
+    /// Configuration
+    deps.set(RemoteConfigManager(), for: (any RemoteConfigManagerProtocol).self)
 
     return true
   }

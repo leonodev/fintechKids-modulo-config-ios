@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 import FirebaseRemoteConfig
 import FirebaseCore
+import Observation
 import FHKUtils
 public import Combine
 
-
-public protocol RemoteConfigManagerProtocol: ObservableObject, AnyObject {
+public protocol RemoteConfigManagerProtocol: Sendable, AnyObject {
     var enabledLanguages: [String] { get }
     func fetchConfig(completion: @escaping (Error?) -> Void)
 }
@@ -21,7 +21,7 @@ public protocol RemoteConfigManagerProtocol: ObservableObject, AnyObject {
 @MainActor
 public final class RemoteConfigManager: RemoteConfigManagerProtocol {
     public let remoteConfig: RemoteConfig
-    @Published public var enabledLanguages: [String] = []
+    public var enabledLanguages: [String] = []
     
     
     // MARK: - Inicialización
@@ -48,19 +48,6 @@ public final class RemoteConfigManager: RemoteConfigManagerProtocol {
         
         remoteConfig.configSettings = settings
     }
-    
-//    public func fetchConfig(completion: @escaping (Error?) -> Void) {
-//        remoteConfig.fetchAndActivate { [weak self] (status, error) in
-//            guard let self = self else { return }
-//            
-//            if let error = error {
-//                Logger.error("Error al obtener configuración remota: \(error.localizedDescription)")
-//            }
-//            
-//            self.enabledLanguages = self.getEnabledLanguages()
-//            completion(error)
-//        }
-//    }
     
     public func fetchConfig(completion: @escaping (Error?) -> Void) {
         remoteConfig.fetchAndActivate { [weak self] (status, error) in

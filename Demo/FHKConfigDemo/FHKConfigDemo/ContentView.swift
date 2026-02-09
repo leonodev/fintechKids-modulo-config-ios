@@ -9,7 +9,7 @@ import SwiftUI
 import FHKConfig
 
 struct ContentView: View {
-    @StateObject private var viewModel = ContentViewModel(configManager: RemoteConfigManager())
+    private var viewModel = ContentViewModel()
     
     var body: some View {
         NavigationView {
@@ -36,7 +36,9 @@ struct ContentView: View {
             .navigationTitle("FHKConfig Demo")
         }
         .onAppear {
-            viewModel.loadConfig()
+            Task {
+                await viewModel.loadConfig()
+            }
         }
     }
 }
