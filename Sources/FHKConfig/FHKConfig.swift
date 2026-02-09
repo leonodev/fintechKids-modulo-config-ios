@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct Configuration {
     private static var environmentType: EnvironmentType = .production
-    private static var languageType: LanguageType = .none
+    private static var languageType: LanguageType = .es
     
     public enum EnvironmentType: String, Sendable {
         case production = "Production"
@@ -15,7 +15,6 @@ public struct Configuration {
     }
 
     public enum LanguageType: String, Sendable, Codable, Equatable {
-        case none = "none"
         case en = "en"
         case es = "es"
         case it = "it"
@@ -27,7 +26,6 @@ public struct Configuration {
         
         public var languageTypeToImageFlag: Image {
             switch self {
-            case .none: return .noneFlag
             case .es: return .spainCircleFlag
             case .it: return .italyCircleFlag
             case .en: return .englandCircleFlag
@@ -41,7 +39,7 @@ public struct Configuration {
     }
     
     public static func languageTypeFromCode(_ string: String) -> LanguageType {
-        return LanguageType(rawValue: string) ?? .none
+        return LanguageType(rawValue: string) ?? .es
     }
 
     public static func setEnvironment(_ environmentType: EnvironmentType) {
@@ -68,7 +66,6 @@ extension Image {
         case .franceCircleFlag: return Configuration.LanguageType.fr.code()
         case .italyCircleFlag: return Configuration.LanguageType.it.code()
         case .spainCircleFlag: return Configuration.LanguageType.es.code()
-        case .noneFlag: return Configuration.LanguageType.none.code()
         default: return ""
         }
     }
