@@ -11,15 +11,16 @@ import FirebaseRemoteConfig
 import FirebaseCore
 import Observation
 import FHKUtils
-public import Combine
+import FHKInjections
+import Combine
 
-public protocol FHKConfigManagerProtocol: Sendable, AnyObject {
+public protocol FHKConfigManagerProtocol: FHKInjectableProtocol {
     var enabledLanguages: [String] { get }
     func fetchConfig(completion: @escaping (Error?) -> Void)
 }
 
 @MainActor
-public final class RemoteConfigManager: FHKConfigManagerProtocol {
+public final class FHKRemoteConfigManager: FHKConfigManagerProtocol {
     public let remoteConfig: RemoteConfig
     public var enabledLanguages: [String] = []
     

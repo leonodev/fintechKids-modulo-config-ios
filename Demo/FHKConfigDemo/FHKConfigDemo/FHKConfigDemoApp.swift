@@ -25,7 +25,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let deps = DependenciesInjection.shared
       
     /// Configuration
-    deps.set(RemoteConfigManager(), for: (any FHKConfigManagerProtocol).self)
+    deps.set(FHKRemoteConfigManager(), for: (any FHKConfigManagerProtocol).self)
 
     return true
   }
