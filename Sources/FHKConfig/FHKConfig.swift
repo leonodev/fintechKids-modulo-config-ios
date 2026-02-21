@@ -7,7 +7,7 @@ import FHKDesignSystem
 import FHKStorage
 import FHKInjections
 
-public protocol ConfigurationProtocol: FHKInjectableProtocol {
+public protocol FHKConfigurationProtocol: FHKInjectableProtocol {
     var environmentType: EnvironmentType { get set }
     var languageType: LanguageType { get set }
     var storageManager: FHKStorageManagerProtocol { get set }
@@ -20,7 +20,7 @@ public protocol ConfigurationProtocol: FHKInjectableProtocol {
     func getParentMail() async -> String?
 }
 
-public class Configuration: ConfigurationProtocol {
+public class FHKConfiguration: FHKConfigurationProtocol {
     public var environmentType: EnvironmentType = .production
     public var languageType: LanguageType = .es
     public var storageManager: FHKStorageManagerProtocol
