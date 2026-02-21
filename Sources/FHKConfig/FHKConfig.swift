@@ -2,70 +2,65 @@
 // https://docs.swift.org/swift-book
 
 import Foundation
-import FHKDesignSystem
 import SwiftUI
+import FHKDesignSystem
+import FHKStorage
+import FHKInjections
 
-public struct Configuration {
-    private static var environmentType: EnvironmentType = .production
-    private static var languageType: LanguageType = .es
+public protocol ConfigurationProtocol: FHKInjectableProtocol {
+    var environmentType: EnvironmentType { get set }
+    var languageType: LanguageType { get set }
+    var storageManager: FHKStorageManagerProtocol { get set }
     
-    public enum EnvironmentType: String, Sendable {
-        case production = "Production"
-        case develop = "Develop"
-    }
+    func languageTypeFromCode(_ string: String) -> LanguageType
+    func setEnvironment(_ environmentType: EnvironmentType)
+    func setLanguage(_ languageType: LanguageType)
+    func getEnvironment() -> EnvironmentType
+    func getLanguage() -> LanguageType
+    func getParentMail() async -> String?
+}
 
-    public enum LanguageType: String, Sendable, Codable, Equatable {
-        case en = "en"
-        case es = "es"
-        case it = "it"
-        case fr = "fr"
-        
-        public func code() -> String {
-            return self.rawValue
-        }
-        
-        public var languageTypeToImageFlag: Image {
-            switch self {
-            case .es: return .spainCircleFlag
-            case .it: return .italyCircleFlag
-            case .en: return .englandCircleFlag
-            case .fr: return .franceCircleFlag
-            }
-        }
-        
-        public static func == (lhs: LanguageType, rhs: LanguageType) -> Bool {
-            lhs.code() == rhs.code()
-        }
+public class Configuration: ConfigurationProtocol {
+    public var environmentType: EnvironmentType = .production
+    public var languageType: LanguageType = .es
+    public var storageManager: FHKStorageManagerProtocol
+    
+    public init(storageManager: FHKStorageManagerProtocol) {
+        self.storageManager = storageManager
     }
     
-    public static func languageTypeFromCode(_ string: String) -> LanguageType {
+    public func languageTypeFromCode(_ string: String) -> LanguageType {
         return LanguageType(rawValue: string) ?? .es
     }
 
-    public static func setEnvironment(_ environmentType: EnvironmentType) {
-        Self.environmentType = environmentType
+    public func setEnvironment(_ environmentType: EnvironmentType) {
+        self.environmentType = environmentType
     }
 
-    public static func setLanguage(_ languageType: LanguageType) {
-        Self.languageType = languageType
+    public func setLanguage(_ languageType: LanguageType) {
+        self.languageType = languageType
     }
 
-    public static func getEnvironment() -> EnvironmentType {
-        return Self.environmentType
+    public func getEnvironment() -> EnvironmentType {
+        self.environmentType
     }
 
-    public static func getLanguage() -> LanguageType {
-        return Self.languageType
+    public func getLanguage() -> LanguageType {
+        self.languageType
+    }
+    
+    public func getParentMail() async -> String? {
+        try? storageManager.readKeychain(String.self, for: KeychainKeys.userKey, prompt: nil)
     }
 }
 
 extension Image {
     public var imageToCode: String {
         switch self {
-        case .englandCircleFlag: return Configuration.LanguageType.en.code()
-        case .franceCircleFlag: return Configuration.LanguageType.fr.code()
-        case .italyCircleFlag: return Configuration.LanguageType.it.code()
-        case .spainCircleFlag: return Configuration.LanguageType.es.code()
+        case .englandCircleFlag: return LanguageType.en.code()
+        case .franceCircleFlag: return LanguageType.fr.code()
+        case .italyCircleFlag: return LanguageType.it.code()
+        case .spainCircleFlag: return LanguageType.es.code()
         default: return ""
         }
     }

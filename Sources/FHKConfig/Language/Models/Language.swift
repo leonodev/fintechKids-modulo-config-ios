@@ -15,10 +15,10 @@ public struct LanguageModel: Codable {
     
     var enabledCodes: [String] {
         var codes: [String] = []
-        if es { codes.append(Configuration.LanguageType.es.code()) }
-        if fr { codes.append(Configuration.LanguageType.fr.code()) }
-        if en { codes.append(Configuration.LanguageType.en.code()) }
-        if it { codes.append(Configuration.LanguageType.it.code()) }
+        if es { codes.append(LanguageType.es.code()) }
+        if fr { codes.append(LanguageType.fr.code()) }
+        if en { codes.append(LanguageType.en.code()) }
+        if it { codes.append(LanguageType.it.code()) }
         return codes
     }
 }
