@@ -7,6 +7,13 @@ import FHKDesignSystem
 import FHKStorage
 import FHKInjections
 
+public extension DependenciesInjection {
+    var storageManager: any FHKStorageManagerProtocol {
+        get { self[(any FHKStorageManagerProtocol).self] }
+        set { self[(any FHKStorageManagerProtocol).self] = newValue }
+    }
+}
+
 public protocol FHKConfigurationProtocol: FHKInjectableProtocol {
     var environmentType: EnvironmentType { get set }
     func setEnvironment(_ environmentType: EnvironmentType)
@@ -16,11 +23,14 @@ public protocol FHKConfigurationProtocol: FHKInjectableProtocol {
 
 public class FHKConfiguration: FHKConfigurationProtocol {
     public var environmentType: EnvironmentType = .production
-    public var storageManager: FHKStorageManagerProtocol
+    //public var storageManager: FHKStorageManagerProtocol
+    private let storageManager = inject.storageManager
     
-    public init(storageManager: FHKStorageManagerProtocol) {
-        self.storageManager = storageManager
-    }
+//    public init(storageManager: FHKStorageManagerProtocol) {
+//        self.storageManager = storageManager
+//    }
+    
+    public init() {}
     
     public func setEnvironment(_ environmentType: EnvironmentType) {
         self.environmentType = environmentType
