@@ -18,7 +18,7 @@ public class FHKConfiguration: FHKConfigurationProtocol {
     public var environmentType: EnvironmentType = .production
     
     // Properties injections
-    private let storageManager = inject.storageManager
+    private var storageManager: any FHKStorageManagerProtocol { inject.storageManager }
     
     public init() {}
     
