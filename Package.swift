@@ -19,6 +19,9 @@ let package = Package(
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git",
             .upToNextMajor(from: "12.6.0")),
         
+        .package(url: "https://github.com/leonodev/fintechKids-modulo-domain-ios.git",
+            branch: "main"),
+        
         .package(url: "https://github.com/leonodev/fintechKids-modulo-utils-ios.git",
             .upToNextMajor(from: "1.0.2")),
         
@@ -48,6 +51,7 @@ let package = Package(
                 .product(name: "FirebaseRemoteConfig", package: "firebase-ios-sdk"),
                 
                 // Modules FHK
+                .product(name: "FHKDomain", package: "fintechKids-modulo-domain-ios"),
                 .product(name: "FHKUtils", package: "fintechKids-modulo-utils-ios"),
                 .product(name: "FHKDesignSystem", package: "fintechKids-modulo-designsystem-ios"),
                 .product(name: "FHKStorage", package: "fintechKids-modulo-storage-ios"),

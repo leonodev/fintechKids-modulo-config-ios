@@ -11,8 +11,7 @@ import FirebaseRemoteConfig
 import FirebaseCore
 import Observation
 import FHKUtils
-import FHKInjections
-import Combine
+import FHKDomain
 
 public protocol FHKConfigManagerProtocol: FHKInjectableProtocol {
     var enabledLanguages: [String] { get }

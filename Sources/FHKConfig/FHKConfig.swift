@@ -6,6 +6,7 @@ import SwiftUI
 import FHKDesignSystem
 import FHKStorage
 import FHKInjections
+import FHKDomain
 
 public protocol FHKConfigurationProtocol: FHKInjectableProtocol {
     var environmentType: EnvironmentType { get set }
