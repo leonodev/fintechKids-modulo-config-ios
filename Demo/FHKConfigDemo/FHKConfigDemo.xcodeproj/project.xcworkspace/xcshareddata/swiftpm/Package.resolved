@@ -34,7 +34,7 @@
       "location" : "https://github.com/leonodev/fintechKids-modulo-domain-ios.git",
       "state" : {
         "branch" : "main",
-        "revision" : "383d48b56a3b27c64401a7696a511ec95c52e955"
+        "revision" : "419fc7f69529f32346d7c97504cd87e9b27ed8ee"
       }
     },
     {
@@ -52,7 +52,7 @@
       "location" : "https://github.com/leonodev/fintechKids-modulo-storage-ios.git",
       "state" : {
         "branch" : "main",
-        "revision" : "d686e7679d1cf209cc0617ea31f5e030d1f99579"
+        "revision" : "96d326c1f79e68d2f5ac1e9aac20cf4d46301ed9"
       }
     },
     {
