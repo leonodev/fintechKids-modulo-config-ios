@@ -5,8 +5,8 @@
 //  Created by Fredy Leon on 22/2/26.
 //
 
-import FHKStorage
 import FHKInjections
+import FHKDomain
 
 public extension DependenciesInjection {
     var storageManager: any FHKStorageManagerProtocol {
