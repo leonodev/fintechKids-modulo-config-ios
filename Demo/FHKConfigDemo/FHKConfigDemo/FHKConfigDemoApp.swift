@@ -9,11 +9,12 @@ import SwiftUI
 import FirebaseCore
 import FHKInjections
 import FHKConfig
+import FHKDomain
 
 public extension DependenciesInjection {
-    var configManager: any FHKConfigManagerProtocol {
-        get { self[(any FHKConfigManagerProtocol).self] }
-        set { self[(any FHKConfigManagerProtocol).self] = newValue }
+    var configManager: any FHKRemoteConfigManagerProtocol {
+        get { self[(any FHKRemoteConfigManagerProtocol).self] }
+        set { self[(any FHKRemoteConfigManagerProtocol).self] = newValue }
     }
 }
 
@@ -25,7 +26,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let deps = DependenciesInjection.shared
       
     /// Configuration
-    deps.set(FHKRemoteConfigManager(), for: (any FHKConfigManagerProtocol).self)
+    deps.set(FHKRemoteConfigManager(), for: (any FHKRemoteConfigManagerProtocol).self)
 
     return true
   }

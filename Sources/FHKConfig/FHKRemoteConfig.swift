@@ -13,13 +13,8 @@ import Observation
 import FHKUtils
 import FHKDomain
 
-public protocol FHKConfigManagerProtocol: FHKInjectableProtocol {
-    var enabledLanguages: [String] { get }
-    func fetchConfig(completion: @escaping (Error?) -> Void)
-}
-
 @MainActor
-public final class FHKRemoteConfigManager: FHKConfigManagerProtocol {
+public final class FHKRemoteConfigManager: FHKRemoteConfigManagerProtocol {
     public let remoteConfig: RemoteConfig
     public var enabledLanguages: [String] = []
     

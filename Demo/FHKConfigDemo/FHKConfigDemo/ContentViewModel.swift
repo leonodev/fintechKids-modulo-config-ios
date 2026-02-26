@@ -9,13 +9,14 @@ import Observation
 import FHKConfig
 import FHKUtils
 import FHKInjections
+import FHKDomain
 
 @Observable
 public final class ContentViewModel {
     var languages: [String] = []
     
     // Injections Dependency
-    private var configManager: any FHKConfigManagerProtocol {
+    private var configManager: any FHKRemoteConfigManagerProtocol {
         inject.configManager
     }
     
