@@ -7,3 +7,4 @@ DerivedData/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
 Demo/FHKConfigDemo/FHKConfigDemo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+*.resolved
