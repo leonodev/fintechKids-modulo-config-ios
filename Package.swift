@@ -25,10 +25,12 @@ let package = Package(
         .package(url: "https://github.com/leonodev/fintechKids-modulo-utils-ios.git",
             .upToNextMajor(from: "1.0.2")),
         
-        .package(url: "https://github.com/leonodev/fintechKids-modulo-designsystem-ios.git",
-                 branch: "main"),
         
-        .package(url: "https://github.com/leonodev/fintechKids-modulo-storage-ios.git",
+        
+        
+        
+        
+        .package(url: "https://github.com/leonodev/fintechKids-modulo-designsystem-ios.git",
                  branch: "main"),
         
         .package(url: "https://github.com/leonodev/fintechKids-modulo-injections-ios.git",
@@ -54,7 +56,6 @@ let package = Package(
                 .product(name: "FHKDomain", package: "fintechKids-modulo-domain-ios"),
                 .product(name: "FHKUtils", package: "fintechKids-modulo-utils-ios"),
                 .product(name: "FHKDesignSystem", package: "fintechKids-modulo-designsystem-ios"),
-                .product(name: "FHKStorage", package: "fintechKids-modulo-storage-ios"),
                 .product(name: "FHKInjections", package: "fintechKids-modulo-injections-ios")
             ]
         ),
