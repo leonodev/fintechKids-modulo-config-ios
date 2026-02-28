@@ -16,25 +16,11 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git",
-            .upToNextMajor(from: "12.6.0")),
-        
         .package(url: "https://github.com/leonodev/fintechKids-modulo-domain-ios.git",
             branch: "main"),
         
         .package(url: "https://github.com/leonodev/fintechKids-modulo-utils-ios.git",
-            .upToNextMajor(from: "1.0.2")),
-        
-        
-        
-        
-        
-        
-        .package(url: "https://github.com/leonodev/fintechKids-modulo-designsystem-ios.git",
-                 branch: "main"),
-        
-        .package(url: "https://github.com/leonodev/fintechKids-modulo-injections-ios.git",
-                branch: "main")
+            branch: "main")
         
     ],
     targets: [
@@ -43,20 +29,9 @@ let package = Package(
         .target(
             name: "FHKConfig",
             dependencies: [
-                // Modules Firebase
-                .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseFirestore", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseStorage", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseMessaging", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseRemoteConfig", package: "firebase-ios-sdk"),
-                
                 // Modules FHK
                 .product(name: "FHKDomain", package: "fintechKids-modulo-domain-ios"),
-                .product(name: "FHKUtils", package: "fintechKids-modulo-utils-ios"),
-                .product(name: "FHKDesignSystem", package: "fintechKids-modulo-designsystem-ios"),
-                .product(name: "FHKInjections", package: "fintechKids-modulo-injections-ios")
+                .product(name: "FHKUtils", package: "fintechKids-modulo-utils-ios")
             ]
         ),
         .testTarget(
