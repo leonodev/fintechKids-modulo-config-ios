@@ -1,18 +1,58 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
+import Foundation
 import FHKDomain
+import FHKInjections
 
-public class FHKConfiguration: FHKConfigurationProtocol {
-    public var environmentType: EnvironmentType = .production
+
+public final class FHKConfiguration: @unchecked Sendable, FHKConfigurationProtocol {
+    private let lock = NSLock()
     
-    public init() {}
+    private var storage: FHKStorageManagerProtocol {
+        inject.fhkStorage
+    }
+    
+    public var parentMail: String?
+    
+    private var _environmentType: EnvironmentType = .production
+    public var environmentType: EnvironmentType {
+        get {
+            lock.lock()
+            defer { lock.unlock() }
+            return _environmentType
+        }
+        set {
+            lock.lock()
+            defer { lock.unlock() }
+            _environmentType = newValue
+        }
+    }
+    
+    public init() {
+        self.parentMail = readParentMail()
+    }
     
     public func setEnvironment(_ environmentType: EnvironmentType) {
-        self.environmentType = environmentType
+        lock.lock()
+        defer { lock.unlock() }
+        self._environmentType = environmentType
     }
 
     public func getEnvironment() -> EnvironmentType {
-        self.environmentType
+        lock.lock()
+        defer { lock.unlock() }
+        return self._environmentType
+    }
+    
+    public func updateParentMail() {
+        self.parentMail = readParentMail()
+    }
+}
+
+private extension FHKConfiguration {
+    
+    private func readParentMail() -> String? {
+        try? storage.readKeychain(String.self, for: KeychainKeys.userKey, prompt: nil)
     }
 }

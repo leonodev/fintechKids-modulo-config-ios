@@ -20,6 +20,9 @@ let package = Package(
             branch: "main"),
         
         .package(url: "https://github.com/leonodev/fintechKids-modulo-utils-ios.git",
+            branch: "main"),
+        
+        .package(url: "https://github.com/leonodev/fintechKids-modulo-injections-ios.git",
             branch: "main")
         
     ],
@@ -31,7 +34,8 @@ let package = Package(
             dependencies: [
                 // Modules FHK
                 .product(name: "FHKDomain", package: "fintechKids-modulo-domain-ios"),
-                .product(name: "FHKUtils", package: "fintechKids-modulo-utils-ios")
+                .product(name: "FHKUtils", package: "fintechKids-modulo-utils-ios"),
+                .product(name: "FHKInjections", package: "fintechKids-modulo-injections-ios")
             ]
         ),
         .testTarget(
