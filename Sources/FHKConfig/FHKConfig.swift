@@ -32,6 +32,7 @@ public final class FHKConfiguration: @unchecked Sendable, FHKConfigurationProtoc
     
     public init() {
         self.parentMail = readParentMail()
+        self.familyName = readFamilyName()
     }
     
     public func setEnvironment(_ environmentType: EnvironmentType) {
@@ -46,8 +47,12 @@ public final class FHKConfiguration: @unchecked Sendable, FHKConfigurationProtoc
         return self._environmentType
     }
     
-    public func updateParentMail() {
+    public func refreshParentMail() {
         self.parentMail = readParentMail()
+    }
+    
+    public func refreshFamilyName() {
+        self.familyName = readFamilyName()
     }
 }
 
