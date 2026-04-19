@@ -15,6 +15,7 @@ public final class FHKConfiguration: @unchecked Sendable, FHKConfigurationProtoc
     
     public var parentMail: String?
     public var familyName: String?
+    public private(set) var approvePin: String?
     
     private var _environmentType: EnvironmentType = .production
     public var environmentType: EnvironmentType {
@@ -33,6 +34,7 @@ public final class FHKConfiguration: @unchecked Sendable, FHKConfigurationProtoc
     public init() {
         self.parentMail = readParentMail()
         self.familyName = readFamilyName()
+        self.approvePin = readApprovePin()
     }
     
     public func setEnvironment(_ environmentType: EnvironmentType) {
@@ -64,5 +66,9 @@ private extension FHKConfiguration {
     
     private func readFamilyName() -> String? {
         try? storage.readKeychain(String.self, for: KeychainKeys.familyNameKey, prompt: nil)
+    }
+    
+    private func readApprovePin() -> String? {
+        try? storage.readKeychain(String.self, for: KeychainKeys.approvePinKey, prompt: nil)
     }
 }
