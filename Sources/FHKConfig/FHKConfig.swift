@@ -16,6 +16,7 @@ public final class FHKConfiguration: @unchecked Sendable, FHKConfigurationProtoc
     public var parentMail: String?
     public var familyName: String?
     public private(set) var approvePin: String?
+    public var isUserAuthenticated: Bool = false
     
     private var _environmentType: EnvironmentType = .production
     public var environmentType: EnvironmentType {
