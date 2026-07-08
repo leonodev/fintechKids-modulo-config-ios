@@ -23,8 +23,10 @@ let package = Package(
             branch: "main"),
         
         .package(url: "https://github.com/leonodev/fintechKids-modulo-injections-ios.git",
-            branch: "main")
+            branch: "main"),
         
+        .package(url: "https://github.com/leonodev/fintechKids-modulo-storage-ios.git",
+                branch: "main")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -35,7 +37,8 @@ let package = Package(
                 // Modules FHK
                 .product(name: "FHKDomain", package: "fintechKids-modulo-domain-ios"),
                 .product(name: "FHKUtils", package: "fintechKids-modulo-utils-ios"),
-                .product(name: "FHKInjections", package: "fintechKids-modulo-injections-ios")
+                .product(name: "FHKInjections", package: "fintechKids-modulo-injections-ios"),
+                .product(name: "FHKStorage", package: "fintechKids-modulo-storage-ios")
             ]
         ),
         .testTarget(

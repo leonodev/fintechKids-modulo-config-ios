@@ -4,12 +4,12 @@
 import Foundation
 import FHKDomain
 import FHKInjections
-
+import FHKStorage
 
 public final class FHKConfiguration: @unchecked Sendable, FHKConfigurationProtocol {
     private let lock = NSLock()
     
-    private var storage: FHKStorageManagerProtocol {
+    private var storage: FHKStorageManager {
         inject.fhkStorage
     }
     
