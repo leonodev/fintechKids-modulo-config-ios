@@ -73,40 +73,33 @@ private final class LiveState: @unchecked Sendable {
     
     // MARK: - Getters Protegidos
     func readParentMail() -> String? {
-        lock.lock(); defer { lock.unlock() }
-        return parentMail
+        lock.withLock { parentMail }
     }
     
     func readFamilyName() -> String? {
-        lock.lock(); defer { lock.unlock() }
-        return familyName
+        lock.withLock { familyName }
     }
     
     func readApprovePin() -> String? {
-        lock.lock(); defer { lock.unlock() }
-        return approvePin
+        lock.withLock { approvePin }
     }
     
     func getEnvironment() -> EnvironmentType {
-        lock.lock(); defer { lock.unlock() }
-        return environmentType
+        lock.withLock { environmentType }
     }
     
     // MARK: - Mutaciones Protegidas
     func setEnvironment(_ env: EnvironmentType) {
-        lock.lock(); defer { lock.unlock() }
-        environmentType = env
+        lock.withLock { environmentType = env }
     }
     
     func refreshParentMail() {
         let newValue = try? storage.readKeychain(String.self, for: KeychainKeys.userKey, prompt: nil)
-        lock.lock(); defer { lock.unlock() }
-        parentMail = newValue
+        lock.withLock { parentMail = newValue }
     }
     
     func refreshFamilyName() {
         let newValue = try? storage.readKeychain(String.self, for: KeychainKeys.familyNameKey, prompt: nil)
-        lock.lock(); defer { lock.unlock() }
-        familyName = newValue
+        lock.withLock { familyName = newValue }
     }
 }
